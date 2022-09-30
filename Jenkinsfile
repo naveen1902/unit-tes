@@ -5,7 +5,7 @@ pipeline {
 
         stage('Checkout Codebase'){
             steps{
-                cleanWs()
+  
                echo "hello world"
             }
         }
