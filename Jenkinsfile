@@ -18,6 +18,40 @@ pipeline {
                 sh 'cd  src ; javac -cp "../lib/junit-platform-console-standalone-1.7.0-all.jar" CarTest.java Car.java App.java'
             }
         }
+        
+        stage ('Server'){
+  steps {
+   rtServer (
+   id: "jfrog",
+                 url: 'http://54.178.5.96:8082//artifactory',
+                 username: 'admin',
+                  password: 'Polaris@123',
+                  bypassProxy: true,
+                   timeout: 300
+                        )
+         
+           }
+    }
+            
+stage('upload artifactory') {
+  steps {
+    rtUpload (
+        serverId:"jfrog" ,
+        spec: '''{
+             "files": [
+                     {
+                      "pattern": "*.txt",
+                      "target" : "polaris/"
+                     }
+                 ]
+            }''',
+
+
+
+      )
+   }
+      
+      }
 
         stage('Test'){
             steps{
